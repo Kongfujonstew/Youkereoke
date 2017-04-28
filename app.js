@@ -12,10 +12,15 @@ global.io = require('socket.io')(http);
 //require other modules from the project
 var router = require('./src/server/router');
 
+// app.engine('jade', require('jade').__express)
+// app.set('view engine', 'jade')
+
+
 //serving static data and using router for routes
 app.use(express.static('src/client'));
 app.use(favicon('src/client/images/microphone.png')); //not sure why this isn't working . . .
 
+app.get('/test', router.get);
 
 //use other helpful stuff
 app.use(morgan('dev'));

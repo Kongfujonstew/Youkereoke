@@ -10,7 +10,10 @@ export class Video extends React.Component {
 
   render () {
     return (
-    <div id="video">{this.props.currentVideo.test}</div>
+    <div>
+      <iframe src="https://www.youtube.com/embed/e-OPwNVFkq4?ecver=2" frameBorder="0" allowFullScreen></iframe>
+    </div>
+    // <div id="video">{this.props.currentVideo.test}</div>
     )
   }
 

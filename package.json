@@ -19,6 +19,7 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "favicon": "0.0.2",
+    "jade": "^1.11.0",
     "morgan": "^1.8.1",
     "nodemon": "^1.11.0",
     "react": "^15.5.4",

@@ -2,11 +2,37 @@
 
 body {
   background-color: white;
+  margin: 0;
 
 }
 
 ul {
   list-style: none;
+}
+
+iframe {
+  height: 75%;
+  width: 100%;
+}
+
+#title {
+  padding: .2em;
+  width: 20%;
+}
+
+#goToSearch {
+  position: absolute;
+  top: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  transform: translateX(-50%);
+  left: 50%;
+  border: .2em solid black;
+  border-radius: .1em;
+}
+
+#goToSearch:hover {
+  cursor:pointer;
 }
 
 #video {
