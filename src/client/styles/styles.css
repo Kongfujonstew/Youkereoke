@@ -1,0 +1,38 @@
+
+
+body {
+  background-color: white;
+
+}
+
+ul {
+  list-style: none;
+}
+
+#video {
+  height: 75%;
+}
+
+#queue {
+  height: 25%;
+}
+
+
+.flexContainer {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: left;
+  align-items: left;
+  -webkit-justify-content: left;
+  justify-content: left;
+}
+
+.video {
+  width: 25%;
+}
+
+.video:hover {
+  cursor:pointer;
+}

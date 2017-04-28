@@ -1,0 +1,35 @@
+{
+  "name": "scratchtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon app.js",
+    "dev": "webpack -d --watch",
+    "build": "webpack -p"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "favicon": "0.0.2",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "serve-favicon": "^2.4.2",
+    "socket-io": "^1.0.0",
+    "socket.io": "^1.7.3",
+    "webpack": "^2.4.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1"
+  }
+}
