@@ -35,7 +35,7 @@ io.on('connection', function(socket) {
 
 
 //instantiate server
-http.listen(3000, function() {
+http.listen(port, function() {
   console.log("Listening on port " + port);
 })
 
