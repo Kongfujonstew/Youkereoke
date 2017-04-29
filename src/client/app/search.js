@@ -24,10 +24,23 @@ export class Search extends React.Component {
             onClick={this.props.searchYouTube}
           />
         </form>
+          <div id="searchResults">
+            <ul className="flexContainer"
+              onClick={this.props.handleSelectVideo('tt')}
+            >
+
+              {this.props.searchResults.map((video, index) =>
+                <li className="video" key={index}>{video.snippet.title.slice(0,34)}
+                  <img src={video.snippet.thumbnails.default.url}/>
+                  <div>Name?</div>
 
 
 
+                </li>
+              )}
+            </ul>
 
+          </div>
       </div>
     )
   }

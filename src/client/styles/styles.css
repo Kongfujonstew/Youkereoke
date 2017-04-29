@@ -11,8 +11,8 @@ ul {
 }
 
 iframe {
-  height: 75%;
-  width: 100%;
+  height: 30em;
+  width: 40em;
 }
 
 #title {
@@ -35,12 +35,20 @@ iframe {
   cursor:pointer;
 }
 
-#video {
-  height: 75%;
+
+#marquee {
+  background-color: darkred
+  color: white;
+
 }
 
 #queue {
   height: 25%;
+}
+
+#searchResults {
+  height: 25%;
+  width: auto;
 }
 
 

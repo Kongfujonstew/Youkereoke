@@ -10,11 +10,20 @@ export class Queue extends React.Component {
   render() {
     return (
       <div id="queue">
-        <ul className="flexContainer">Videos
-          {this.props.videoQueue.map((video, index) =>
-            <li className="video" key={index}>{video}</li>
+        <div className="flexContainer">
+            <ul className="flexContainer">
+              {this.props.videoQueue.map((video, index) =>
+                <li className="video" key={index}>{video.snippet.title.slice(0,34)}
+                  <img src={video.snippet.thumbnails.default.url}/>
+                  <div>Name?</div>
+
+
+
+                </li>
+              )}
+            </ul>
           )}
-        </ul>
+        </div>
 
 
       </div>
