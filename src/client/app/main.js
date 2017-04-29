@@ -32,7 +32,7 @@ export class Main extends React.Component {
       })
     })
     $.get('http://localhost:3000/videoqueue', function(currentQueue) { //CHANGE ME TO DEPLOY
-      console.log('newQueue: ', currentQueue)
+      console.log('newQueue: ', currentQueue);
       that.setState({
         videoQueue: currentQueue
       })
