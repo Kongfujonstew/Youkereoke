@@ -1,13 +1,22 @@
-var express = require("express");
+var express = require('express');
+var Promise = require('bluebird');
+var db = Promise.promisifyAll(require('./db'));
 
 //under construction!!!
 
-
 module.exports = {
 
-  get: function(req, res) {
-    console.log('router.js get fired')
-    res.render('search.js');
+  videoQueue: [],
+
+  syncVideoQueueOnPageLoad: function(req, res) {
+    console.log('syncVideoQueueOnPageLoad fired');
+    res.send(module.exports.videoQueue);
+  },
+
+
+  updateVideoQueueFromSocket: function(newQueue) {
+    module.exports.videoQueue = newQueue;
+    console.log('updateVideoQueue fired, queuelength: ', newQueue.length)
   }
 
 

@@ -15,22 +15,31 @@ export class Main extends React.Component {
     this.state = {
       term: 'testTerm',
       searchResults: data,
-      currentVideo: {
-        test: 'tst'
-      },
-      videoQueue: data //this will have to be primed correctly too
+      currentVideo: data[0],
+      videoQueue: [] 
     }
 
   }
 
-  componentDidMount () {
-    socket.on('queueUpdate', function(videoQueue) {
-      this.setState({
-        videoQueue: videoQueue 
+
+//socket io listeners and init new client with currentQueue
+  componentWillMount () {
+    var that = this;
+    socket.on('updateQueue', function(newQueue) {
+      console.log('updateQueue received')
+      that.setState({
+        videoQueue: newQueue 
+      })
+    })
+    $.get('http://localhost:3000/videoqueue', function(currentQueue) { //CHANGE ME TO DEPLOY
+      console.log('newQueue: ', currentQueue)
+      that.setState({
+        videoQueue: currentQueue
       })
     })
   }
 
+//Ajax calls
   searchYouTube (e) {
     var that = this;
     e.preventDefault();
@@ -53,6 +62,16 @@ export class Main extends React.Component {
   }
 
 
+  //currentVideo
+  handleVideoEnd () {
+
+  }
+
+  moveToNextVideo () {
+
+  }
+
+//Search and update queue
   setSearchResults(results) {
     this.setState({
       searchResults: results.items
@@ -73,23 +92,17 @@ export class Main extends React.Component {
     })
   }
 
-  handleSelectVideo (e) {
-    console.log(e)
-    // var newQueue = this.state.videoQueue.push(video);
+  handleSelectVideo (video) {
+    var newQueue = this.state.videoQueue;
+    newQueue.push(video)
+
+    socket.emit('addSongToQueue', newQueue)
     // this.setState({
     //   videoQueue: newQueue
     // })
   }
 
-  handleVideoEnd () {
-
-  }
-
-  moveToNextVideo () {
-
-  }
-
-
+//render
   render () {
     return (
       <div id="main">

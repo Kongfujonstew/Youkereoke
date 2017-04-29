@@ -20,18 +20,21 @@ var router = require('./src/server/router');
 app.use(express.static('src/client'));
 app.use(favicon('src/client/images/microphone.png')); //not sure why this isn't working . . .
 
-app.get('/test', router.get);
 
 //use other helpful stuff
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
+app.get('/videoqueue', router.syncVideoQueueOnPageLoad);
+
 
 // instantiate the socket io connection
 io.on('connection', function(socket) {
   console.log('a user connected');
-  socket.on('test', function() {
-    console.log('test received');
+  socket.on('addSongToQueue', function(newQueue) {
+    console.log('addSong received');
+    io.emit('updateQueue', newQueue);
+    router.updateVideoQueueFromSocket(newQueue);
   });
   socket.on('disconnect', function() {
     console.log('a user disconnected');

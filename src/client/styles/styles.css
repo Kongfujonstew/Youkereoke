@@ -10,11 +10,6 @@ ul {
   list-style: none;
 }
 
-iframe {
-  height: 30em;
-  width: 40em;
-}
-
 #title {
   padding: .2em;
   width: 20%;
@@ -31,8 +26,22 @@ iframe {
   border-radius: .1em;
 }
 
-#goToSearch:hover {
+/*#goToSearch:hover {
   cursor:pointer;
+}*/
+
+#title {
+  height: 5%;
+}
+
+#video {
+  height: 70%;
+  width: 100%;
+}
+
+iframe {
+  height: 100%;
+  width: 100%;
 }
 
 

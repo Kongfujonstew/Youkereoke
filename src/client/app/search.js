@@ -26,11 +26,13 @@ export class Search extends React.Component {
         </form>
           <div id="searchResults">
             <ul className="flexContainer"
-              onClick={this.props.handleSelectVideo('tt')}
             >
 
               {this.props.searchResults.map((video, index) =>
-                <li className="video" key={index}>{video.snippet.title.slice(0,34)}
+                <li className="video" key={index}
+                  onClick={() => this.props.handleSelectVideo(video)}
+
+                  >{video.snippet.title.slice(0,34)}
                   <img src={video.snippet.thumbnails.default.url}/>
                   <div>Name?</div>
 

@@ -9,15 +9,27 @@ export class Video extends React.Component {
   }
 
   render () {
-    return (
-    <div>
-      <iframe src="https://www.youtube.com/embed/e-OPwNVFkq4?ecver=2" frameBorder="0" allowFullScreen></iframe>
-    </div>
-    // <div id="video">{this.props.currentVideo.test}</div>
-    )
+    // if (typeof this.props.currentVideo !== 'object') {
+    //   return (
+    //     <div>
+    //       <h1>Please select a video</h1>
+    //     </div>
+    //   )
+
+    // } else {
+
+      return (
+        <div id="video">
+          <iframe src={"https://www.youtube.com/embed/" + this.props.currentVideo.id.videoId + "?autoplay=1"} frameBorder="0" allowFullScreen></iframe>
+        </div>
+
+      )
+    
   }
 
 
 
 
 }
+
+

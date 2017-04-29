@@ -8,6 +8,14 @@ export class Queue extends React.Component {
   }
 
   render() {
+
+    if (!this.props.videoQueue.length) {
+      return (
+        <div id="queue">
+          <h1>Please add a video to the queue</h1>
+        </div>
+      )
+    }
     return (
       <div id="queue">
         <div className="flexContainer">
