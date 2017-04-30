@@ -45,6 +45,10 @@ io.on('connection', function(socket) {
     io.emit('updateQueue', newQueue);
     router.updateVideoQueueFromSocket(newQueue);
   })
+  socket.on('socketSendMessage', function(message) {
+    console.log('new message received and sent');
+    io.emit('ioDeliverNewMessage', message);
+  })
   socket.on('disconnect', function() {
     console.log('a user disconnected');
   })

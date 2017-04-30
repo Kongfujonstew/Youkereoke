@@ -14,10 +14,13 @@ export class Main extends React.Component {
 
     this.state = {
       term: 'testTerm',
+      messageText: '',
       searchResults: [],
       currentVideo: {},
       videoQueue: [],
-      isPlayingNow: false 
+      isPlayingNow: false,
+      messages: {username: 'jon',
+        message: 'hey there'} 
     }
 
   }
@@ -32,6 +35,19 @@ export class Main extends React.Component {
       that.setState({
         videoQueue: newQueue,
       })
+    })
+
+    socket.on('ioDeliverNewMessage', function(message) {
+      var messageText = message.username + ': ' + message.message;
+      that.setState({
+        messageText: messageText
+      })
+
+      setTimeout(function() {
+        that.setState({
+          messageText: ''
+        })
+      }, 15000)
     })
 
     socket.emit('socketRequestUpdate', function(currentQueue) {
@@ -83,13 +99,6 @@ export class Main extends React.Component {
     }
   }
 
-  dequeueVideo () {
-  }
-
-  // clearSongs() {
-  //   var newQueue = [];
-  //   socket.emit('socketUpdateQueue', newQueue);
-  // }
 
 //Search and update queue
   setSearchResults(results) {
@@ -118,6 +127,24 @@ export class Main extends React.Component {
     newQueue.push(video);
 
     socket.emit('addSongToQueue', newQueue);
+  }
+
+  handleMessageTextChange (e) {
+    e.preventDefault();
+    this.setState({
+      messageText: e.target.value
+    })
+    console.log('HMTC fired, tm: ', this.state.messageText)
+  }
+
+  sendMessage (e) {
+    e.preventDefault();
+    var message = {
+      username: window.username,
+      message: this.state.messageText
+    }
+    console.log('sendMessage: ', message)
+    socket.emit('socketSendMessage', message);
   }
 
 
@@ -156,6 +183,8 @@ export class Main extends React.Component {
           >NextVideo
         </button>
 
+        <div id="message">{this.state.messageText}</div>
+
       </div>
       )
 
@@ -175,6 +204,16 @@ export class Main extends React.Component {
           <Queue 
             videoQueue={this.state.videoQueue} 
           />
+          <form>
+            <input 
+              type="text" 
+              onChange={this.handleMessageTextChange.bind(this)}
+            />
+            <button 
+              type="submit"
+              onClick={this.sendMessage.bind(this)}
+            >Send Message</button>
+          </form>
 
           <Search 
             handleTermChange={this.handleTermChange.bind(this)}

@@ -52,6 +52,13 @@ iframe {
   width: 100%;
 }
 
+#message {
+  color: white;
+  position:absolute;
+  top: 30%;
+  padding: 3%;
+}
+
 
 #marquee {
   background-color: darkred
@@ -60,7 +67,7 @@ iframe {
 }
 
 #queue {
-  font-size: 50%;
+  font-size: 87%;
   background-color: #BEDBF7;
   height: 18%;
 }
@@ -72,7 +79,7 @@ iframe {
 }
 
 #searchResults {
-  font-size: 50%;
+  font-size: 87%;
   height: 25%;
   width: auto;
 }
