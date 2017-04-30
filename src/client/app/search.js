@@ -13,6 +13,7 @@ export class Search extends React.Component {
     return (
       <div id="search">
         <form>
+          <div>Search and add your song:</div>
           <input 
             type="text" 
             //defaultValue="Search for karaoke versions of your favorite songs"

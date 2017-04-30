@@ -23,11 +23,6 @@ export class Video extends React.Component {
     };
 
 
-
-
-
-
-
     if (!this.props.videoQueue.length) {
       return (
         <div id="videoDisco">

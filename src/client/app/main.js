@@ -5,9 +5,6 @@ import {Video} from './video';
 import {Queue} from './queue';
 import {Search} from './search';
 
-
-var data = require('./data.js');
-
 export class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -18,17 +15,12 @@ export class Main extends React.Component {
       searchResults: [],
       currentVideo: {},
       videoQueue: [],
-      isPlayingNow: false,
-      messages: {username: 'jon',
-        message: 'hey there'} 
     }
 
   }
 
-
-//socket io listeners and init new client with currentQueue
   componentWillMount () {
-    this.ajaxVideos('gnr karaoke');
+    this.ajaxVideos('karaoke classics');
     var that = this;
     socket.on('updateQueue', function(newQueue) {
       console.log('updateQueue received, newQueue length: ', newQueue.length)
@@ -47,7 +39,7 @@ export class Main extends React.Component {
         that.setState({
           messageText: ''
         })
-      }, 15000)
+      }, 11000)
     })
 
     socket.emit('socketRequestUpdate', function(currentQueue) {
@@ -55,13 +47,8 @@ export class Main extends React.Component {
         videoQueue: currentQueue,
       })   
     })
-
-    window.addEventListener('ended', function() {
-      console.log('end fired yea bio')
-    })
   }
 
-//Ajax calls
   searchYouTube (e) {
     var that = this;
     e.preventDefault();
@@ -69,7 +56,6 @@ export class Main extends React.Component {
     var q = this.state.term +' karaoke';
     this.ajaxVideos(q);
   }
-
 
   ajaxVideos (query) {
     var that = this;
@@ -88,8 +74,6 @@ export class Main extends React.Component {
     });
   }
 
-
-  //currentVideo
   handleVideoEnd () {
     this.nextVideo();
   }
@@ -102,7 +86,6 @@ export class Main extends React.Component {
       socket.emit('socketUpdateQueue', newQueue);
     }
   }
-
 
 //Search and update queue
   setSearchResults(results) {
@@ -153,7 +136,6 @@ export class Main extends React.Component {
 
 
 
-//render
   render () {
 
     if (window.username === 'main') {
@@ -200,15 +182,15 @@ export class Main extends React.Component {
       <div id="main">
         <h1 id="title">Youkeoroke</h1>
         <div>Hi {window.username}!</div>
-        <div>Now singing: {this.state.videoQueue[0] ? this.state.videoQueue[0].username : ''} </div>
+        <div>{this.state.videoQueue[0] ? 'Now singing: ' + this.state.videoQueue[0].username : 'Add a song and sing right now!'} </div>
         <div>Total songs ahead in line: {this.state.videoQueue.length}</div>
         <div>
-
-        <div>Upcoming</div>
+          <div>Upcoming performances:</div>
           <Queue 
             videoQueue={this.state.videoQueue} 
           />
-          <form>
+          <form id="messageForm">
+            <div>Send {this.state.videoQueue[0] ? this.state.videoQueue[0].username : ''} a message:</div>
             <input 
               type="text" 
               onChange={this.handleMessageTextChange.bind(this)}
