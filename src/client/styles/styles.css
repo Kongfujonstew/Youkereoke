@@ -60,7 +60,7 @@ iframe {
 }
 
 #queue {
-  font-size: 1.5em;
+  font-size: 1em;
   background-color: #BEDBF7;
   height: 18%;
 }
@@ -74,7 +74,7 @@ iframe {
 #searchResults {
   height: 25%;
   width: auto;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 img {
