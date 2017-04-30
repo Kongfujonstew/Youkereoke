@@ -6,12 +6,10 @@ export class Video extends React.Component {
     super(props);
 
 
-  }
-
-  // setInitialState 
+  } 
 
   render () {
-    if (!this.props.currentVideo.kind) {
+    if (!this.props.videoQueue.length) {
       return (
         <div id="videoDisco">
         </div>
@@ -19,9 +17,9 @@ export class Video extends React.Component {
       return (
         <div id="video">
           <iframe 
-            src={"https://www.youtube.com/embed/" + this.props.currentVideo.id.videoId + "?autoplay=1"} 
+            src={"https://www.youtube.com/embed/" + this.props.videoQueue[0].id.videoId + "?autoplay=1"} 
             frameBorder="0" allowFullScreen
-            onended={this.props.handleVideoEnd}
+            onEnded={this.props.handleVideoEnd}
             ></iframe>
         </div>
 

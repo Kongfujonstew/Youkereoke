@@ -41,7 +41,7 @@ ul {
 }
 
 #videoDisco {
-  height: 70%;
+  height: 65%;
   width: 100%;
   background-image: url('../images/discoball.jpg');
   background-size: cover;
@@ -60,12 +60,25 @@ iframe {
 }
 
 #queue {
-  height: 25%;
+  font-size: .5em;
+  background-color: #BEDBF7;
+  height: 18%;
+}
+
+#search {
+  background-color: lightgrey;
+  margin: 20%, 5%, 2%, 5%;
+
 }
 
 #searchResults {
   height: 25%;
   width: auto;
+  font-size: .5em;
+}
+
+img {
+  height: 3em;
 }
 
 
@@ -81,7 +94,7 @@ iframe {
 }
 
 .video {
-  width: 25%;
+  margin: 5px;
 }
 
 .video:hover {

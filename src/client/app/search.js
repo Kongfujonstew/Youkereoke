@@ -11,8 +11,7 @@ export class Search extends React.Component {
 
   render () {
     return (
-      <div>
-        <h1>Add your songs here</h1>
+      <div id="search">
         <form>
           <input 
             type="text" 
@@ -22,24 +21,25 @@ export class Search extends React.Component {
           <button 
             type="submit"
             onClick={this.props.searchYouTube}
-          />
+          >Search now</button>
         </form>
           <div id="searchResults">
-            <ul className="flexContainer"
+            <div className="flexContainer"
             >
 
               {this.props.searchResults.slice(0,4).map((video, index) =>
-                <li className="video" key={index}
+                <div className="video" key={index}
                   onClick={() => this.props.handleSelectVideo(video)}
 
-                  >{video.snippet.title.slice(0,34)}
+                  >
+                  <div>{video.snippet.title.slice(0,35)}</div>
                   <img src={video.snippet.thumbnails.default.url}/>
 
 
 
-                </li>
+                </div>
               )}
-            </ul>
+            </div>
 
           </div>
       </div>

@@ -9,26 +9,27 @@ export class Queue extends React.Component {
 
   render() {
 
-    if (!this.props.videoQueue.length) {
+    if (this.props.videoQueue.length <= 1) {
       return (
         <div id="queue">
-          <h1>Queue empty.  Please add a video to the queue</h1>
+          <h1>Queue empty.  Please add a video</h1>
         </div>
       )} 
     return (
       <div id="queue">
         <div className="flexContainer">
-            <ul className="flexContainer">
-              {this.props.videoQueue.slice(0,4).map((video, index) =>
-                <li className="video" key={index}>{video.snippet.title.slice(0,34)}
+            <div className="flexContainer">
+              {this.props.videoQueue.slice(1,5).map((video, index) =>
+                <div className="video" key={index}>
+                  <div>{video.snippet.title.slice(0,35)}</div>
                   <img src={video.snippet.thumbnails.default.url}/>
                   <div>{video.username}</div>
 
 
 
-                </li>
+                </div>
               )}
-            </ul>
+            </div>
         </div>
 
 

@@ -14,31 +14,30 @@ export class Main extends React.Component {
 
     this.state = {
       term: 'testTerm',
-      searchResults: data,
+      searchResults: [],
       currentVideo: {},
-      videoQueue: [] 
+      videoQueue: [],
+      isPlayingNow: false 
     }
 
   }
 
 
 //socket io listeners and init new client with currentQueue
-  componentDidMount () {
+  componentWillMount () {
     this.ajaxVideos('gnr karaoke');
     var that = this;
     socket.on('updateQueue', function(newQueue) {
-      console.log('updateQueue received')
+      console.log('updateQueue received, newQueue length: ', newQueue.length)
       that.setState({
         videoQueue: newQueue,
-        currentVideo: newQueue[0]
       })
     })
-    $.get('http://localhost:3000/videoqueue', function(currentQueue) { //CHANGE ME TO DEPLOY
-      console.log('newQueue: ', currentQueue);
+
+    socket.emit('socketRequestUpdate', function(currentQueue) {
       that.setState({
         videoQueue: currentQueue,
-        // currentVideo: currentQueue[0] //this breaks something . . 
-      })
+      })   
     })
   }
 
@@ -75,14 +74,17 @@ export class Main extends React.Component {
     console.log('test fired');
   }
 
-  moveToNextVideo () {
-
+  nextVideo () {
+    if (this.state.videoQueue.length >=2) {
+      console.log('nextVideo thriggered')
+      var newQueue = Array.prototype.slice.call(this.state.videoQueue).slice(1);
+      console.log('newQueue.length: ', newQueue.length)
+      socket.emit('socketUpdateQueue', newQueue);
+    }
   }
 
-  // dequeueVideo () {
-  //   var newQueue = this.state.videoQueue.shift();
-  //   socket.emit('socketUpdateQueue', newQueue);
-  // }
+  dequeueVideo () {
+  }
 
   // clearSongs() {
   //   var newQueue = [];
@@ -116,12 +118,6 @@ export class Main extends React.Component {
     newQueue.push(video);
 
     socket.emit('addSongToQueue', newQueue);
-
-    if (!this.state.currentVideo.kind) {
-      this.setState({
-        currentVideo: this.state.videoQueue[0]
-      })
-    }
   }
 
 
@@ -135,11 +131,13 @@ export class Main extends React.Component {
         <h1 id="title">Youkeoroke</h1>
         <div>
           <Video 
+            videoQueue={this.state.videoQueue}
+            isPlayingNow={this.state.isPlayingNow}
             currentVideo={this.state.currentVideo}
             handleVideoEnd={this.handleVideoEnd.bind(this)}
           />
 
-          <marquee id="marquee" behavior="scroll" direction="left">Live queue . . . Add your songs at yko.herokuapps.com</marquee>
+          <marquee id="marquee" behavior="scroll" direction="left">Live queue . . . Add your songs at yko.herokuapp.com</marquee>
 
           <Queue 
             videoQueue={this.state.videoQueue} 
@@ -153,6 +151,10 @@ export class Main extends React.Component {
           />
         </div>
 
+        <button
+          onClick={this.nextVideo.bind(this)}
+          >NextVideo
+        </button>
 
       </div>
       )
@@ -164,11 +166,12 @@ export class Main extends React.Component {
     return (
       <div id="main">
         <h1 id="title">Youkeoroke</h1>
-        <h1 id="username"> Hi {window.username}!</h1>
-        <div>Now singing: {this.state.currentVideo.username} </div>
+        <div>Hi {window.username}!</div>
+        <div>Now singing: {this.state.videoQueue[0] ? this.state.videoQueue[0].username : ''} </div>
+        <div>Total songs ahead in line: {this.state.videoQueue.length}</div>
         <div>
 
-        <h1>Upcoming</h1>
+        <div>Upcoming</div>
           <Queue 
             videoQueue={this.state.videoQueue} 
           />
@@ -180,8 +183,6 @@ export class Main extends React.Component {
             searchResults={this.state.searchResults}
           />
         </div>
-
-
       </div>
       )
     }

@@ -36,10 +36,15 @@ io.on('connection', function(socket) {
     io.emit('updateQueue', newQueue);
     router.updateVideoQueueFromSocket(newQueue);
   });
-  // socket.on('socketUpdateQueue', function(newQueue) {
-  //   io.emit('updateQueue', newQueue);
-  //   router.updateVideoQueueFromSocket(newQueue);
-  // })
+  socket.on('socketRequestUpdate', function() {
+    console.log('socketRequestUpdate received');
+    io.to(socket.id).emit('updateQueue', router.videoQueue);
+  })
+  socket.on('socketUpdateQueue', function(newQueue) {
+    console.log('socketUpdateQueue received');
+    io.emit('updateQueue', newQueue);
+    router.updateVideoQueueFromSocket(newQueue);
+  })
   socket.on('disconnect', function() {
     console.log('a user disconnected');
   })

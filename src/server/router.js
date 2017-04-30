@@ -19,7 +19,9 @@ module.exports = {
     module.exports.videoQueue = newQueue;
     console.log('updateVideoQueue complete')
     console.log('videoQueue length: ', module.exports.videoQueue.length)
-  }
+  },
+
+  
 
 
 }
