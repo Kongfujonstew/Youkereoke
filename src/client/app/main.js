@@ -79,10 +79,15 @@ export class Main extends React.Component {
 
   }
 
-  dequeueVideo () {
-    var newQueue = this.state.videoQueue.shift();
-    socket.emit('addSongToQueue', newQueue);
-  }
+  // dequeueVideo () {
+  //   var newQueue = this.state.videoQueue.shift();
+  //   socket.emit('socketUpdateQueue', newQueue);
+  // }
+
+  // clearSongs() {
+  //   var newQueue = [];
+  //   socket.emit('socketUpdateQueue', newQueue);
+  // }
 
 //Search and update queue
   setSearchResults(results) {
@@ -148,7 +153,7 @@ export class Main extends React.Component {
           />
         </div>
 
-        <button onClick={this.dequeueVideo.bind(this)}>Next Song</button>
+
       </div>
       )
 
