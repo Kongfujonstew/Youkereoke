@@ -8,6 +8,7 @@ export class Video extends React.Component {
 
   }
 
+  // setInitialState 
 
   render () {
     if (!this.props.currentVideo.kind) {

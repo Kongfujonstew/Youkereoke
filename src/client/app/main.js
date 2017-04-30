@@ -24,7 +24,7 @@ export class Main extends React.Component {
 
 //socket io listeners and init new client with currentQueue
   componentDidMount () {
-    this.ajaxVideos('gnr');
+    this.ajaxVideos('gnr karaoke');
     var that = this;
     socket.on('updateQueue', function(newQueue) {
       console.log('updateQueue received')
@@ -77,6 +77,11 @@ export class Main extends React.Component {
 
   moveToNextVideo () {
 
+  }
+
+  dequeueVideo () {
+    var newQueue = this.state.videoQueue.shift();
+    socket.emit('addSongToQueue', newQueue);
   }
 
 //Search and update queue
@@ -143,7 +148,7 @@ export class Main extends React.Component {
           />
         </div>
 
-
+        <button onClick={this.dequeueVideo.bind(this)}>Next Song</button>
       </div>
       )
 
