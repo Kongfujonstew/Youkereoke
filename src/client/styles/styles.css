@@ -36,7 +36,7 @@ ul {
 }
 
 #video {
-  height: 62%;
+  height: 65%;
   width: 100%;
 }
 
@@ -60,7 +60,7 @@ iframe {
 }
 
 #queue {
-  font-size: .5em;
+  font-size: 1.5em;
   background-color: #BEDBF7;
   height: 18%;
 }
@@ -74,7 +74,7 @@ iframe {
 #searchResults {
   height: 25%;
   width: auto;
-  font-size: .5em;
+  font-size: 1.5em;
 }
 
 img {
