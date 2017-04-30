@@ -1,5 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
+import YouTube from 'react-youtube';
+
+// var YouTube = require('react-youtube');
 
 export class Video extends React.Component {
   constructor(props) {
@@ -9,6 +12,22 @@ export class Video extends React.Component {
   } 
 
   render () {
+
+
+/////////////////////////////////////
+
+    const opts = {
+      playerVars: { // https://developers.google.com/youtube/player_parameters 
+        autoplay: 1
+      }
+    };
+
+
+
+
+
+
+
     if (!this.props.videoQueue.length) {
       return (
         <div id="videoDisco">
@@ -16,11 +35,11 @@ export class Video extends React.Component {
       )} 
       return (
         <div id="video">
-          <iframe 
-            src={"https://www.youtube.com/embed/" + this.props.videoQueue[0].id.videoId + "?autoplay=1"} 
-            frameBorder="0" allowFullScreen
-            onEnded={this.props.handleVideoEnd}
-            ></iframe>
+          <YouTube 
+            videoId={this.props.videoQueue[0].id.videoId} 
+            opts = {opts}
+            onEnd={this.props.handleVideoEnd}
+            />
         </div>
 
       )

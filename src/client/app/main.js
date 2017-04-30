@@ -55,6 +55,10 @@ export class Main extends React.Component {
         videoQueue: currentQueue,
       })   
     })
+
+    window.addEventListener('ended', function() {
+      console.log('end fired yea bio')
+    })
   }
 
 //Ajax calls
@@ -87,7 +91,7 @@ export class Main extends React.Component {
 
   //currentVideo
   handleVideoEnd () {
-    console.log('test fired');
+    this.nextVideo();
   }
 
   nextVideo () {
