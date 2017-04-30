@@ -3,6 +3,7 @@
 body {
   background-color: white;
   margin: 0;
+  font-family: Roboto;
 
 }
 
@@ -31,12 +32,19 @@ ul {
 }*/
 
 #title {
-  height: 5%;
+  height: 3%;
 }
 
 #video {
+  height: 65%;
+  width: 100%;
+}
+
+#videoDisco {
   height: 70%;
   width: 100%;
+  background-image: url('../images/discoball.jpg');
+  background-size: cover;
 }
 
 iframe {

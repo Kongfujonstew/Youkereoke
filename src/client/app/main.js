@@ -15,7 +15,7 @@ export class Main extends React.Component {
     this.state = {
       term: 'testTerm',
       searchResults: data,
-      currentVideo: data[0],
+      currentVideo: {},
       videoQueue: [] 
     }
 
@@ -23,18 +23,21 @@ export class Main extends React.Component {
 
 
 //socket io listeners and init new client with currentQueue
-  componentWillMount () {
+  componentDidMount () {
+    this.ajaxVideos('gnr');
     var that = this;
     socket.on('updateQueue', function(newQueue) {
       console.log('updateQueue received')
       that.setState({
-        videoQueue: newQueue 
+        videoQueue: newQueue,
+        currentVideo: newQueue[0]
       })
     })
     $.get('http://localhost:3000/videoqueue', function(currentQueue) { //CHANGE ME TO DEPLOY
       console.log('newQueue: ', currentQueue);
       that.setState({
-        videoQueue: currentQueue
+        videoQueue: currentQueue,
+        // currentVideo: currentQueue[0] //this breaks something . . 
       })
     })
   }
@@ -45,11 +48,16 @@ export class Main extends React.Component {
     e.preventDefault();
     console.log('SYT called, this.state.term: ', this.state.term)
     var q = this.state.term +' karaoke';
+    this.ajaxVideos(q);
+  }
 
+
+  ajaxVideos (query) {
+    var that = this;
     $.get('https://www.googleapis.com/youtube/v3/search', {
       url: 'https://www.googleapis.com/youtube/v3/search',
       key: 'AIzaSyDZQ48zhJFH1DPJBFJ-NQo5QKSWe4twumA',
-      q: q,
+      q: query,
       maxResults: 4,
       part: 'snippet',
       type: 'video',
@@ -64,7 +72,7 @@ export class Main extends React.Component {
 
   //currentVideo
   handleVideoEnd () {
-
+    console.log('test fired');
   }
 
   moveToNextVideo () {
@@ -93,17 +101,25 @@ export class Main extends React.Component {
   }
 
   handleSelectVideo (video) {
+    video.username = window.username
     var newQueue = this.state.videoQueue;
-    newQueue.push(video)
+    newQueue.push(video);
 
-    socket.emit('addSongToQueue', newQueue)
-    // this.setState({
-    //   videoQueue: newQueue
-    // })
+    socket.emit('addSongToQueue', newQueue);
+
+    if (!this.state.currentVideo.kind) {
+      this.setState({
+        currentVideo: this.state.videoQueue[0]
+      })
+    }
   }
+
+
 
 //render
   render () {
+
+    if (window.username === 'main') {
     return (
       <div id="main">
         <h1 id="title">Youkeoroke</h1>
@@ -113,7 +129,7 @@ export class Main extends React.Component {
             handleVideoEnd={this.handleVideoEnd.bind(this)}
           />
 
-          <marquee id="marquee" behavior="scroll" direction="left">Live queue!!!    Add your own song to the queue real-time . . . Scroll down to search for your songs</marquee>
+          <marquee id="marquee" behavior="scroll" direction="left">Live queue . . . Add your songs at yko.herokuapps.com</marquee>
 
           <Queue 
             videoQueue={this.state.videoQueue} 
@@ -130,6 +146,35 @@ export class Main extends React.Component {
 
       </div>
       )
+
+    }
+
+
+    else if (window.username !== 'main') {
+    return (
+      <div id="main">
+        <h1 id="title">Youkeoroke</h1>
+        <h1 id="username"> Hi {window.username}!</h1>
+        <div>Now singing: {this.state.currentVideo.username} </div>
+        <div>
+
+        <h1>Upcoming</h1>
+          <Queue 
+            videoQueue={this.state.videoQueue} 
+          />
+
+          <Search 
+            handleTermChange={this.handleTermChange.bind(this)}
+            searchYouTube={this.searchYouTube.bind(this)}
+            handleSelectVideo={this.handleSelectVideo.bind(this)}
+            searchResults={this.state.searchResults}
+          />
+        </div>
+
+
+      </div>
+      )
+    }
   }
 
 }
