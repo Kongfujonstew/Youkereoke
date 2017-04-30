@@ -32,7 +32,7 @@ export class Search extends React.Component {
                   onClick={() => this.props.handleSelectVideo(video)}
 
                   >
-                  <div>{video.snippet.title.slice(0,35)}</div>
+                  <div>{video.snippet.title.slice(0,45)}</div>
                   <img src={video.snippet.thumbnails.default.url}/>
 
 
