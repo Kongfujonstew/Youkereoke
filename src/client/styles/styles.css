@@ -36,7 +36,7 @@ ul {
 }
 
 #video {
-  height: 65%;
+  height: 62%;
   width: 100%;
 }
 
@@ -67,7 +67,7 @@ iframe {
 
 #search {
   background-color: lightgrey;
-  margin: 20%, 5%, 2%, 5%;
+  margin: 40px, 5px, 40px, 5px;
 
 }
 
