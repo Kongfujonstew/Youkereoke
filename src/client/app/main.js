@@ -21,7 +21,7 @@ export class Main extends React.Component {
   }
 
   componentWillMount () {
-    this.ajaxVideos('karaoke classics');
+    this.ajaxVideos('karaoke beatles');
     var that = this;
     socket.on('updateQueue', function(newQueue) {
       console.log('updateQueue received, newQueue length: ', newQueue.length)
@@ -76,12 +76,12 @@ export class Main extends React.Component {
   }
 
   handleVideoEnd () {
+    ('HVE called')
     this.nextVideo();
   }
 
   nextVideo () {
-    if (this.state.videoQueue.length >=2) {
-      console.log('nextVideo thriggered')
+    if (this.state.videoQueue.length >=1) {
       var newQueue = Array.prototype.slice.call(this.state.videoQueue).slice(1);
       console.log('newQueue.length: ', newQueue.length)
       socket.emit('socketUpdateQueue', newQueue);
