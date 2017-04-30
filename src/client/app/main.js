@@ -12,6 +12,7 @@ export class Main extends React.Component {
     this.state = {
       term: 'testTerm',
       messageText: '',
+      message: '',
       searchResults: [],
       currentVideo: {},
       videoQueue: [],
@@ -32,12 +33,12 @@ export class Main extends React.Component {
     socket.on('ioDeliverNewMessage', function(message) {
       var messageText = message.username + ': ' + message.message;
       that.setState({
-        messageText: messageText
+        message: messageText
       })
 
       setTimeout(function() {
         that.setState({
-          messageText: ''
+          message: ''
         })
       }, 11000)
     })
@@ -150,7 +151,7 @@ export class Main extends React.Component {
             handleVideoEnd={this.handleVideoEnd.bind(this)}
           />
 
-          <marquee id="marquee" behavior="scroll" direction="left">Live queue . . . Add your songs at yko.herokuapp.com</marquee>
+          <marquee id="marquee" behavior="scroll" direction="left">Live queue . . . Add songs at yko.herokuapp.com</marquee>
 
           <Queue 
             videoQueue={this.state.videoQueue} 
@@ -169,7 +170,7 @@ export class Main extends React.Component {
           >NextVideo
         </button>
 
-        <div id="message">{this.state.messageText}</div>
+        <div id="message">{this.state.message}</div>
 
       </div>
       )
@@ -190,7 +191,7 @@ export class Main extends React.Component {
             videoQueue={this.state.videoQueue} 
           />
           <form id="messageForm">
-            <div>Send {this.state.videoQueue[0] ? this.state.videoQueue[0].username : ''} a message:</div>
+            <div>Send {this.state.videoQueue[0] ? this.state.videoQueue[0].username : ''} an onscreen message:</div>
             <input 
               type="text" 
               onChange={this.handleMessageTextChange.bind(this)}
@@ -199,6 +200,7 @@ export class Main extends React.Component {
               type="submit"
               onClick={this.sendMessage.bind(this)}
             >Send Message</button>
+            <div id="messageBlack">Current onscreen message: {this.state.message.length ? this.state.message : 'none'}</div>
           </form>
 
           <Search 
