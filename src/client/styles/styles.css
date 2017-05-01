@@ -76,19 +76,18 @@ iframe {
 #queue {
   font-size: 87%;
   background-color: #BEDBF7;
-  height: 18%;
+  height: 30%;
 }
 
 #search {
   background-color: lightgrey;
-  margin: 40px, 5px, 40px, 5px;
-
+  height: 43%;
 }
 
 #searchResults {
   font-size: 87%;
-  height: 18%;
   width: auto;
+  height: 43%;
 }
 
 img {

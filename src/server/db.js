@@ -19,13 +19,6 @@ var schema = new mongoose.Schema({ queue: 'String' });
 var Queue = mongoose.model('Queue', schema, 'queues');
 
 
-db.collections.queues.drop()
-
-currentQueue = new Queue ({
-  queue: '[]'
-})
-
-currentQueue.save();
 
 module.exports = {
   db: db,

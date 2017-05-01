@@ -18,7 +18,7 @@ export class Queue extends React.Component {
         </div>
       )} 
     return (
-      <div id="queue">
+      <div id="queue">Upcoming performances:
         <div className="flexContainer">
             <div className="flexContainer">
               {this.props.videoQueue.slice(1,5).map((video, index) =>

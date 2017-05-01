@@ -21,7 +21,7 @@ export class Main extends React.Component {
   }
 
   componentWillMount () {
-    this.ajaxVideos('karaoke beatles');
+    this.ajaxVideos('karaoke michael jackson');
     var that = this;
     socket.on('updateQueue', function(newQueue) {
       console.log('updateQueue received: ', newQueue)
@@ -188,7 +188,6 @@ export class Main extends React.Component {
         <div>{this.state.videoQueue[0] ? 'Now singing: ' + this.state.videoQueue[0].username : 'Add a song and sing right now!'} </div>
         <div>Total songs ahead of you: {this.state.videoQueue.length}</div>
         <div>
-          <div>Upcoming performances:</div>
           <Queue 
             videoQueue={this.state.videoQueue} 
           />
