@@ -23,7 +23,7 @@ export class Queue extends React.Component {
             <div className="flexContainer">
               {this.props.videoQueue.slice(1,5).map((video, index) =>
                 <div className="video" key={index}>
-                  <div>{video.snippet.title.slice(0,35)}</div>
+                  <div>{index+1}) {video.snippet.title.slice(0,35)}</div>
                   <img src={video.snippet.thumbnails.default.url}/>
                   <div>{video.username}</div>
 

@@ -2,6 +2,8 @@ var express = require("express");
 var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var Promise = require('bluebird');
 
 //server and socket io requires
 var port = process.env.PORT || 3000;
@@ -11,6 +13,7 @@ global.io = require('socket.io')(http);
 
 //require other modules from the project
 var router = require('./src/server/router');
+// var db = Promise.promisifyAll(require('./src/server/router'));
 
 // app.engine('jade', require('jade').__express)
 // app.set('view engine', 'jade')
@@ -25,7 +28,7 @@ app.use(favicon('src/client/images/microphone.png')); //not sure why this isn't 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
-app.get('/videoqueue', router.syncVideoQueueOnPageLoad);
+app.get('/videoqueue', router.syncFromDBForNewClient);
 
 
 // instantiate the socket io connection
@@ -38,7 +41,12 @@ io.on('connection', function(socket) {
   });
   socket.on('socketRequestUpdate', function() {
     console.log('socketRequestUpdate received');
-    io.to(socket.id).emit('updateQueue', router.videoQueue);
+    router.syncFromDBForNewClient()
+    .then(function(currentQueueString) {
+      var currentQueue = JSON.parse(currentQueueString);
+      console.log('SENDING QUEUE :', currentQueue)
+      io.to(socket.id).emit('updateQueue', currentQueue);
+    })
   })
   socket.on('socketUpdateQueue', function(newQueue) {
     console.log('socketUpdateQueue received');
@@ -53,6 +61,8 @@ io.on('connection', function(socket) {
     console.log('a user disconnected');
   })
 });
+
+//////////////
 
 
 //instantiate server

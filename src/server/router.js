@@ -1,34 +1,101 @@
 var express = require('express');
 var Promise = require('bluebird');
-var db = Promise.promisifyAll(require('./db'));
+var mongoose = require('mongoose');
 
-//under construction!!!
+var db = require('./db').db;
+var Queue = require('./db').Queue;
+// var Queue = require('./db').Queue;
+// var db = Promise.promisifyAll(require('./db'));
+
+// var db = mongoose.connection;
+
+
+var deleteCollection = function(queue) {
+  return new Promise(function(resolve, reject) {
+    db.collections.queues.drop(function(err, somedata) {
+      if(err) {
+        reject(err);
+      } else {
+        console.log('deleted.');
+        resolve(queue);
+      }
+    })
+  });
+
+} 
+
 
 module.exports = {
 
-  videoQueue: [],
+  videoQueue: '[]',
 
-  syncVideoQueueOnPageLoad: function(req, res) {
-    console.log('syncVideoQueueOnPageLoad fired');
-    res.send(module.exports.videoQueue);
-    console.log('syncVideoQueueOnPageLoad complete');
+  syncFromDBForNewClient: function() {
+    return new Promise(function(resolve, reject) {
+      db.collections.queues.findOne(function(err, queueData) {
+        if (err) {
+          reject(err);
+        } else {
+          console.log('queueData: ', queueData);  
+          resolve(queueData.queue);
+        }
+      });
+    });
   },
-
 
   updateVideoQueueFromSocket: function(newQueue) {
-    module.exports.videoQueue = newQueue;
-    console.log('updateVideoQueue complete')
-    console.log('videoQueue length: ', module.exports.videoQueue.length)
+    console.log('adding queue to db, length: ', newQueue.length)
+    deleteCollection(newQueue)
+    .then(function(newQueue) {
+
+      var currentQueue = new Queue ({
+        queue: JSON.stringify(newQueue)
+      })
+
+      currentQueue.save();
+
+      console.log('a newQueue was added: ', newQueue)
+    })
+
+
   },
-
-  
-
 
 }
 
 
-//insert into currentqueue(currentqueue) values ([{"kind":"youtube#searchResult","etag":"abQHWywil_AkNqdqji7_FqiK-u4/3E7u1VZ18KYyfLIA6RgI2w-7nRI","id":{"kind":"youtube#video","videoId":"Pd6Ub7Ju2RM"},"snippet":{"publishedAt":"2015-02-13T18:50:38.000Z","channelId":"UCr5lOCcjZzNprLrhxO0WZQw","title":"Learn React, Flux, and Flow: Part I","description":"Brought to you by Formidable Labs and SeattleJS, Colin Megill walks us through Facebook's React framework in part one of this three-part series. The workshop ...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/Pd6Ub7Ju2RM/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/Pd6Ub7Ju2RM/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/Pd6Ub7Ju2RM/hqdefault.jpg","width":480,"height":360}},"channelTitle":"","liveBroadcastContent":"none"}}])
 
+
+
+
+//use server cachemem:
+
+// module.exports = {
+
+//   videoQueue: [],
+
+//   syncVideoQueueOnPageLoad: function(req, res) {
+//     console.log('syncVideoQueueOnPageLoad fired');
+//     res.send(module.exports.videoQueue);
+//     console.log('syncVideoQueueOnPageLoad complete');
+//   },
+
+
+//   updateVideoQueueFromSocket: function(newQueue) {
+//     module.exports.videoQueue = newQueue;
+//     console.log('updateVideoQueue complete')
+//     console.log('videoQueue length: ', module.exports.videoQueue.length)
+//   },
+
+
+
+
+// }
+
+
+
+
+
+
+//MYSQL
 
 // module.exports = {
 

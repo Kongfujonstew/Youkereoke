@@ -24,7 +24,7 @@ export class Main extends React.Component {
     this.ajaxVideos('karaoke beatles');
     var that = this;
     socket.on('updateQueue', function(newQueue) {
-      console.log('updateQueue received, newQueue length: ', newQueue.length)
+      console.log('updateQueue received: ', newQueue)
       that.setState({
         videoQueue: newQueue,
       })
@@ -43,10 +43,8 @@ export class Main extends React.Component {
       }, 11000)
     })
 
-    socket.emit('socketRequestUpdate', function(currentQueue) {
-      that.setState({
-        videoQueue: currentQueue,
-      })   
+    socket.emit('socketRequestUpdate', function() {
+      console.log('client connect db sync: ', currentQueue);
     })
   }
 
@@ -81,7 +79,11 @@ export class Main extends React.Component {
   }
 
   nextVideo () {
-    if (this.state.videoQueue.length >=1) {
+    if (this.state.videoQueue.length === 1) {
+      var newQueue = [];
+      console.log('newQueue.length: ', newQueue.length)
+      socket.emit('socketUpdateQueue', newQueue);
+    }  if (this.state.videoQueue.length > 1) {
       var newQueue = Array.prototype.slice.call(this.state.videoQueue).slice(1);
       console.log('newQueue.length: ', newQueue.length)
       socket.emit('socketUpdateQueue', newQueue);
@@ -184,7 +186,7 @@ export class Main extends React.Component {
         <h1 id="title">Youkeoroke</h1>
         <div>Hi {window.username}!</div>
         <div>{this.state.videoQueue[0] ? 'Now singing: ' + this.state.videoQueue[0].username : 'Add a song and sing right now!'} </div>
-        <div>Total songs ahead in line: {this.state.videoQueue.length}</div>
+        <div>Total songs ahead of you: {this.state.videoQueue.length}</div>
         <div>
           <div>Upcoming performances:</div>
           <Queue 
