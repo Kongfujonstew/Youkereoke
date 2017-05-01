@@ -172,7 +172,7 @@ export class Main extends React.Component {
           >NextVideo
         </button>
 
-        <div id="message">{this.state.message}</div>
+        <h1 id="message">{this.state.message}</h1>
 
       </div>
       )
