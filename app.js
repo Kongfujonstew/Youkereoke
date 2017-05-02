@@ -34,6 +34,7 @@ app.get('/videoqueue', router.syncFromDBForNewClient);
 // instantiate the socket io connection
 io.on('connection', function(socket) {
   console.log('a user connected');
+  io.emit('newClientConnect');
   socket.on('addSongToQueue', function(newQueue) {
     console.log('addSong received');
     io.emit('updateQueue', newQueue);
@@ -59,6 +60,7 @@ io.on('connection', function(socket) {
   })
   socket.on('disconnect', function() {
     console.log('a user disconnected');
+    io.emit('clientDisconnect');
   })
 });
 

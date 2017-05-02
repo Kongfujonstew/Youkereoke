@@ -31,20 +31,34 @@ export class Main extends React.Component {
     })
 
     socket.on('ioDeliverNewMessage', function(message) {
+      var myStopFunction = function() {
+        clearTimeout(myVar);
+      } 
+      myStopFunction();
       var messageText = message.username + ': ' + message.message;
       that.setState({
         message: messageText
       })
 
-      setTimeout(function() {
+      var myVar;
+
+      var timeMessage = setTimeout(function() {
         that.setState({
-          message: ''
-        })
-      }, 11000)
+          message: ''})
+      }, 11000);
+
     })
 
     socket.emit('socketRequestUpdate', function() {
       console.log('client connect db sync: ', currentQueue);
+    })
+
+    socket.on('newClientConnect', function() {
+      console.log('new client connected');
+    })
+
+    socket.on('clientDisconnect', function() {
+      console.log('new client connected');
     })
   }
 
