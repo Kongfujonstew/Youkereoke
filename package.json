@@ -24,6 +24,7 @@
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
     "nodemon": "^1.11.0",
+    "node": "6.11.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-youtube": "^7.4.0",
